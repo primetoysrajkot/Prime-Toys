@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 const LocationSection = () => {
   const handleGetDirections = () => {
     window.open(
-      "https://www.google.com/maps/search/?api=1&query=Real+Prime+Complex+Mavadi+Main+Road+Rajkot",
+      "https://www.google.com/maps/dir/?api=1&destination=22.2763,70.7867&destination_place_id=Bapa+Sitaram+Chowk+Mavadi+Rajkot",
       "_blank"
     );
   };
@@ -55,7 +55,7 @@ const LocationSection = () => {
             className="glass-card p-2 h-full min-h-[400px]"
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3692.2!2d70.8!3d22.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDE4JzAwLjAiTiA3MMKwNDgnMDAuMCJF!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3692.5!2d70.7841!3d22.2763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959cb5e5f0f1c9d%3A0x8b3b3b3b3b3b3b3b!2sBapa%20Sitaram%20Chowk%2C%20Mavadi%2C%20Rajkot%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
               width="100%"
               height="100%"
               style={{ border: 0, borderRadius: "1rem", minHeight: "380px" }}
