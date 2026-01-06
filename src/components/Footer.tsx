@@ -123,17 +123,13 @@ const Footer = () => {
             <h4 className="text-lg font-display font-bold mb-4">Store Hours</h4>
             <ul className="space-y-2 text-background/70">
               <li className="flex justify-between">
-                <span>Mon - Sat</span>
-                <span className="text-accent">10AM - 9PM</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Sunday</span>
-                <span className="text-accent">11AM - 8PM</span>
+                <span>Mon - Sun</span>
+                <span className="text-accent">9AM - 9PM</span>
               </li>
             </ul>
             <div className="mt-6 p-4 bg-background/10 rounded-xl">
               <p className="text-sm text-background/80">
-                🎉 Special holiday hours may apply. Call ahead to confirm!
+                🎉 Open all 7 days for your convenience!
               </p>
             </div>
           </motion.div>
