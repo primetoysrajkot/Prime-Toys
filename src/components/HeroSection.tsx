@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Sparkles, MapPin, ArrowRight } from "lucide-react";
+import { Sparkles, MapPin, ArrowRight, Instagram } from "lucide-react";
 
 const HeroSection = () => {
   return (
@@ -78,15 +78,27 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex flex-col items-center justify-center gap-4"
           >
-            <Button variant="hero" size="xl" className="group">
-              Explore Toys
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button variant="heroSecondary" size="xl" className="group">
-              <MapPin className="w-5 h-5" />
-              Visit Store
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Button variant="hero" size="xl" asChild className="group">
+                <a href="#categories">
+                    Explore Toys
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </a>
+                </Button>
+                <Button variant="heroSecondary" size="xl" asChild className="group">
+                <a href="#location">
+                    <MapPin className="w-5 h-5" />
+                    Visit Store
+                </a>
+                </Button>
+            </div>
+            <Button variant="instagram" size="xl" asChild className="group">
+                <a href="https://www.instagram.com/primetoysrajkot?igsh=amFseHJwY3Z2dnp1" target="_blank" rel="noreferrer">
+                    <Instagram className="w-5 h-5 mr-2" />
+                    Follow on Instagram
+                </a>
             </Button>
           </motion.div>
 

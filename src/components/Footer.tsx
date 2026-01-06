@@ -40,7 +40,7 @@ const Footer = () => {
             <div className="flex gap-4">
               {[
                 { icon: Facebook, href: "#" },
-                { icon: Instagram, href: "#" },
+                { icon: Instagram, href: "https://www.instagram.com/primetoysrajkot?igsh=amFseHJwY3Z2dnp1" },
                 { icon: Youtube, href: "#" },
                 { icon: Twitter, href: "#" },
               ].map((social, idx) => (

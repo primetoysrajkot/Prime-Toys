@@ -19,6 +19,7 @@ const buttonVariants = cva(
         heroSecondary: "bg-card/90 backdrop-blur-sm border-2 border-primary/20 text-foreground hover:bg-card hover:border-primary/50 hover:shadow-lg",
         coral: "bg-gradient-to-r from-coral to-coral-light text-secondary-foreground shadow-lg hover:shadow-glow-secondary hover:scale-105 active:scale-95",
         playful: "bg-gradient-to-r from-playful-pink to-purple-pop text-primary-foreground shadow-lg hover:scale-105 active:scale-95",
+        instagram: "bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white shadow-lg hover:shadow-glow-primary hover:scale-105 active:scale-95",
       },
       size: {
         default: "h-11 px-6 py-2",

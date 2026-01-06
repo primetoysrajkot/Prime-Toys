@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Sparkles, ShieldCheck, Truck, Gift } from "lucide-react";
+import { Sparkles, ShieldCheck, LayoutGrid, Gift } from "lucide-react";
 
 const features = [
   {
@@ -15,9 +15,9 @@ const features = [
     gradient: "from-mint-green to-primary",
   },
   {
-    icon: Truck,
-    title: "Local Delivery",
-    description: "Fast delivery across Rajkot city",
+    icon: LayoutGrid,
+    title: "Variety",
+    description: "All type toys and sports item",
     gradient: "from-coral to-secondary",
   },
   {

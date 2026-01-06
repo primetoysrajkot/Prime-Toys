@@ -1,17 +1,23 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Clock, Navigation, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from 'react';
 
 const LocationSection = () => {
+  const [copied, setCopied] = useState(false);
   const handleGetDirections = () => {
     window.open(
-      "https://www.google.com/maps/dir/?api=1&destination=22.2763,70.7867&destination_place_id=Bapa+Sitaram+Chowk+Mavadi+Rajkot",
+      "https://maps.app.goo.gl/X7WwyHF598vHnF4T6",
       "_blank"
     );
   };
 
   const handleCall = (number: string) => {
-    window.location.href = `tel:${number}`;
+    navigator.clipboard.writeText(number).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+      window.location.href = `tel:${number}`;
+    });
   };
 
   const handleWhatsApp = () => {
@@ -55,7 +61,7 @@ const LocationSection = () => {
             className="glass-card p-2 h-full min-h-[400px]"
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3692.5!2d70.7841!3d22.2763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959cb5e5f0f1c9d%3A0x8b3b3b3b3b3b3b3b!2sBapa%20Sitaram%20Chowk%2C%20Mavadi%2C%20Rajkot%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.883835624103!2d70.773594!3d22.28253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959cb46ac184063%3A0xb528c0ba4205b32a!2sPrime%20Toys!5e0!3m2!1sen!2sin!4v17176656 Prime Toys!5e0!3m2!1sen!2sin!4v1717665666768!5m2!1sen!2sin"
               width="100%"
               height="100%"
               style={{ border: 0, borderRadius: "1rem", minHeight: "380px" }}
@@ -82,13 +88,7 @@ const LocationSection = () => {
                 <div>
                   <h3 className="text-xl font-display font-bold text-foreground mb-2">Our Address</h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    Prime Toys, Real Prime Complex,
-                    <br />
-                    Beside Mann Meet Studio, First Floor,
-                    <br />
-                    Bapa Sitaram Chowk,
-                    <br />
-                    Mavadi Main Road, Rajkot
+                    First Floor, Prime Toys, Bapa Sitaram Chowk, PRIME TOYS, Real Prime Complex, Mavdi Main Road, beside Mann Meet Studio, Mavdi Village, Mavdi, Rajkot, Gujarat 360004
                   </p>
                   <Button variant="hero" size="lg" className="mt-4" onClick={handleGetDirections}>
                     <Navigation className="w-4 h-4" />
@@ -114,7 +114,7 @@ const LocationSection = () => {
                       onClick={() => handleCall("9909691291")}
                     >
                       <Phone className="w-4 h-4" />
-                      9909691291
+                      {copied ? "Copied!" : "9909691291"}
                     </Button>
                     <Button
                       variant="coral"
@@ -123,7 +123,7 @@ const LocationSection = () => {
                       onClick={() => handleCall("8849806714")}
                     >
                       <Phone className="w-4 h-4" />
-                      8849806714
+                      {copied ? "Copied!" : "8849806714"}
                     </Button>
                   </div>
                 </div>
