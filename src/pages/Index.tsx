@@ -1,13 +1,48 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Helmet } from "react-helmet-async";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import FeaturesSection from "@/components/FeaturesSection";
+import FeaturedSection from "@/components/FeaturedSection";
+import CategoriesSection from "@/components/CategoriesSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import LocationSection from "@/components/LocationSection";
+import ContactSection from "@/components/ContactSection";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Helmet>
+        <title>Prime Toys - Where Fun Meets Imagination | Rajkot's Premier Toy Showroom</title>
+        <meta
+          name="description"
+          content="Discover thousands of toys at Prime Toys, Rajkot's largest toy showroom. From action figures to educational toys, find the perfect gift for every child. Visit us at Mavadi Main Road!"
+        />
+        <meta
+          name="keywords"
+          content="toys Rajkot, toy store, kids toys, educational toys, LEGO, dolls, action figures, Prime Toys, toy showroom"
+        />
+        <link rel="canonical" href="https://primetoys.in" />
+        <meta property="og:title" content="Prime Toys - Where Fun Meets Imagination" />
+        <meta
+          property="og:description"
+          content="Rajkot's premier toy destination with 5000+ toys across 50+ brands. Visit our showroom today!"
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
+      <main className="min-h-screen bg-background overflow-x-hidden">
+        <Navbar />
+        <HeroSection />
+        <FeaturesSection />
+        <FeaturedSection />
+        <CategoriesSection />
+        <TestimonialsSection />
+        <LocationSection />
+        <ContactSection />
+        <Footer />
+      </main>
+    </>
   );
 };
 
