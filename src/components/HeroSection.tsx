@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Sparkles, MapPin, ArrowRight, Instagram } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
@@ -37,7 +38,7 @@ const HeroSection = () => {
 
       {/* Main Content */}
       <div className="container relative z-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto text-center">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -54,7 +55,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-display font-bold mb-6"
+            className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-display font-bold mb-6"
           >
             <span className="text-foreground">Welcome to</span>
             <br />
@@ -68,7 +69,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl sm:text-2xl lg:text-3xl text-muted-foreground mb-10 font-medium"
+            className="text-2xl sm:text-3xl lg:text-4xl text-muted-foreground mb-10 font-medium"
           >
             Where Fun Meets Imagination ✨
           </motion.p>
@@ -82,10 +83,10 @@ const HeroSection = () => {
           >
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button variant="hero" size="xl" asChild className="group">
-                <a href="#categories">
+                  <Link to="/toys">
                     Explore Toys
                     <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </a>
+                  </Link>
                 </Button>
                 <Button variant="heroSecondary" size="xl" asChild className="group">
                 <a href="#location">
@@ -107,7 +108,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto"
+            className="mt-16 grid grid-cols-3 gap-8 max-w-xl mx-auto"
           >
             {[
               { value: "5000+", label: "Toys" },
@@ -115,7 +116,7 @@ const HeroSection = () => {
               { value: "10K+", label: "Happy Kids" },
             ].map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-primary">{stat.value}</div>
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-primary">{stat.value}</div>
                 <div className="text-sm text-muted-foreground">{stat.label}</div>
               </div>
             ))}
