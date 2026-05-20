@@ -1,36 +1,38 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import Toys from "./pages/Toys";
-import ToyCategory from "./pages/ToyCategory";
-import Toy from "./pages/Toy";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from '@/pages/Index';
+import Toys from '@/pages/Toys';
+import ToyCategory from '@/pages/ToyCategory';
+import Toy from '@/pages/Toy';
+import AdminDashboard from '@/pages/admin/AdminDashboard';
+import Products from '@/pages/admin/Products';
+import Categories from '@/pages/admin/Categories';
+import LoginPage from '@/pages/admin/LoginPage';
+import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/toys" element={<Toys />} />
-            <Route path="/toys/:categoryName" element={<ToyCategory />} />
-            <Route path="/toys/:categoryName/:toyId" element={<Toy />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
-);
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/toys" element={<Toys />} />
+        <Route path="/toys/:categoryName" element={<ToyCategory />} />
+        <Route path="/toys/:categoryId/:toyId" element={<Toy />} />
+        <Route path="/admin/login" element={<LoginPage />} />
+        <Route
+          path="/admin"
+          element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>}
+        />
+        <Route
+          path="/admin/products"
+          element={<ProtectedRoute><Products /></ProtectedRoute>}
+        />
+        <Route
+          path="/admin/categories"
+          element={<ProtectedRoute><Categories /></ProtectedRoute>}
+        />
+      </Routes>
+    </Router>
+  );
+}
 
 export default App;

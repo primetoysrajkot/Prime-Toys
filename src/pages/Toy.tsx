@@ -1,79 +1,88 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getToy } from '@/data/toys';
-import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getToy } from "@/data/toys";
+import { Button } from "@/components/ui/button";
 
-const Toy = () => {
-  const { categoryName, toyId } = useParams();
-  const toy = getToy(categoryName || "", toyId || "");
-  const [currentImage, setCurrentImage] = useState(0);
+function Toy() {
+  const { categoryId, toyId } = useParams();
+  const [toy, setToy] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!toy) {
-    return (
-        <div className="container mx-auto px-4 py-8 text-center">
-            <h1 className="text-3xl font-bold">Toy not found</h1>
-        </div>
-    );
+  useEffect(() => {
+    const fetchToy = async () => {
+      setIsLoading(true);
+      const fetchedToy = await getToy(categoryId, toyId);
+      setToy(fetchedToy);
+      setIsLoading(false);
+    };
+    fetchToy();
+  }, [categoryId, toyId]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
-  const nextImage = () => {
-    setCurrentImage((prev) => (prev === toy.images.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevImage = () => {
-    setCurrentImage((prev) => (prev === 0 ? toy.images.length - 1 : prev - 1));
-  };
+  if (!toy) {
+    return <div>Toy not found</div>;
+  }
 
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
-         <div className="absolute inset-0 toy-pattern opacity-50" />
-        <div className="container relative z-10 mx-auto px-4 py-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-                    <div className="relative">
-                        <div className="aspect-square w-full overflow-hidden rounded-2xl bg-gray-200 shadow-lg">
-                            <img
-                            src={toy.images[currentImage]}
-                            alt={toy.name}
-                            className="w-full h-full object-cover object-center"
-                            />
-                        </div>
-                        {toy.images.length > 1 && (
-                        <>
-                            <Button
-                            onClick={prevImage}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full"
-                            variant="outline"
-                            size="icon"
-                            >
-                            <ChevronLeft className="h-6 w-6" />
-                            </Button>
-                            <Button
-                            onClick={nextImage}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full"
-                            variant="outline"
-                            size="icon"
-                            >
-                            <ChevronRight className="h-6 w-6" />
-                            </Button>
-                        </>
-                        )}
-                    </div>
-                </motion.div>
-                <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-                    <h1 className="text-4xl lg:text-5xl font-display font-bold text-foreground mb-4">
-                        {toy.name}
-                    </h1>
-                    <p className="text-lg text-muted-foreground">
-                        {toy.description}
-                    </p>
-                </motion.div>
-            </div>
+    <div className="bg-white">
+      <div className="pt-6">
+        {/* Image gallery */}
+        <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+          <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
+            <img
+              src={toy.images[0]}
+              alt={toy.name}
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
         </div>
-    </section>
+
+        {/* Product info */}
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+          <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+              {toy.name}
+            </h1>
+          </div>
+
+          {/* Options */}
+          <div className="mt-4 lg:row-span-3 lg:mt-0">
+            <h2 className="sr-only">Product information</h2>
+            <p className="text-3xl tracking-tight text-gray-900">$10.00</p>
+
+            <form className="mt-10">
+              <Button
+                type="submit"
+                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                Add to bag
+              </Button>
+            </form>
+          </div>
+
+          <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+            {/* Description and details */}
+            <div>
+              <h3 className="sr-only">Description</h3>
+
+              <div className="space-y-6">
+                <p className="text-base text-gray-900">{toy.description}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link to={`/category/${categoryId}`}>
+            <Button>Back to category</Button>
+          </Link>
+        </div>
+      </div>
+    </div>
   );
-};
+}
 
 export default Toy;

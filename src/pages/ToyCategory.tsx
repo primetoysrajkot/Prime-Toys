@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from "framer-motion";
 import { getCategory } from '@/data/toys';
 import { ChevronRight } from 'lucide-react';
 
 const ToyCategory = () => {
-  const { categoryName } = useParams();
-  const category = getCategory(categoryName || "");
+  const { categoryName } = useParams(); // This param is the category ID
+  const [category, setCategory] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      setIsLoading(true);
+      const fetchedCategory = await getCategory(categoryName || "");
+      setCategory(fetchedCategory);
+      setIsLoading(false);
+    };
+    fetchCategory();
+  }, [categoryName]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (!category) {
     return <div>Category not found</div>;
@@ -26,7 +41,7 @@ const ToyCategory = () => {
             {category.name}
           </h2>
         </motion.div>
-        {category.toys.length > 0 ? (
+        {category.toys && category.toys.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {category.toys.map((toy, index) => (
               <Link to={`/toys/${category.id}/${toy.id}`} key={toy.id}>

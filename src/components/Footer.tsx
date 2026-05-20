@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -17,10 +18,18 @@ const Footer = () => {
     <footer className="bg-foreground text-background relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-10 left-10 text-8xl">🧸</div>
-        <div className="absolute top-20 right-20 text-6xl">🎮</div>
-        <div className="absolute bottom-20 left-1/4 text-7xl">🚗</div>
-        <div className="absolute bottom-10 right-1/4 text-6xl">🎨</div>
+        <div className="absolute top-10 left-10 text-8xl">
+          🧸
+        </div>
+        <div className="absolute top-20 right-20 text-6xl">
+          🎮
+        </div>
+        <div className="absolute bottom-20 left-1/4 text-7xl">
+          🚗
+        </div>
+        <div className="absolute bottom-10 right-1/4 text-6xl">
+          🎨
+        </div>
       </div>
 
       <div className="container relative z-10 py-16">
@@ -62,7 +71,9 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <h4 className="text-lg font-display font-bold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-display font-bold mb-4">
+              Quick Links
+            </h4>
             <ul className="space-y-2">
               {quickLinks.map((link, idx) => (
                 <li key={idx}>
@@ -138,10 +149,17 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-background/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/60">
-            <p>© {currentYear} Prime Toys. All rights reserved.</p>
+            <p>
+              © {currentYear} Prime Toys. All rights reserved.
+            </p>
             <p className="flex items-center gap-2">
               Made with <span className="text-secondary">❤️</span> for happy kids everywhere
             </p>
+          </div>
+          <div className="text-center mt-4">
+            <Link to="/admin/login" className="text-sm text-background/60 hover:text-primary">
+              Admin Login
+            </Link>
           </div>
         </div>
       </div>

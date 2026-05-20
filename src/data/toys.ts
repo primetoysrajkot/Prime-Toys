@@ -1,122 +1,107 @@
-export const categories = [
-  {
-    id: "action-figures",
-    name: "Action Figures & Playsets",
-    icon: "🦸",
-    toys: [
-      {
-        id: "action-figure-1",
-        name: "Superhero Action Figure",
-        description: "A super-powered hero to save the day!",
-        images: [
-          "/images/toys/action-figures/figure-1-1.jpg",
-          "/images/toys/action-figures/figure-1-2.jpg",
-        ],
-      },
-    ],
-  },
-  {
-    id: "dolls",
-    name: "Dolls & Accessories",
-    icon: "🎀",
-    toys: [],
-  },
-  {
-    id: "building",
-    name: "Building Sets & Blocks",
-    icon: "🧱",
-    toys: [
-       {
-        id: "building-set-1",
-        name: "Creative Building Blocks",
-        description: "Build anything you can imagine with this 500-piece set.",
-        images: [
-          "/images/toys/building-sets/set-1-1.jpg",
-          "/images/toys/building-sets/set-1-2.jpg",
-          "/images/toys/building-sets/set-1-3.jpg",
-        ],
-      },
-    ],
-  },
-  {
-    id: "educational",
-    name: "Educational & STEM Toys",
-    icon: "🔬",
-    toys: [],
-  },
-  {
-    id: "arts",
-    name: "Arts & Crafts",
-    icon: "🎨",
-    toys: [],
-  },
-  {
-    id: "puzzles",
-    name: "Puzzles & Brain Teasers",
-    icon: "🧩",
-    toys: [],
-  },
-  {
-    id: "vehicles",
-    name: "Vehicles & Remote Control",
-    icon: "🚗",
-    toys: [],
-  },
-  {
-    id: "board-games",
-    name: "Board Games & Card Games",
-    icon: "🎲",
-    toys: [],
-  },
-  {
-    id: "plush",
-    name: "Plush & Stuffed Animals",
-    icon: "🧸",
-    toys: [],
-  },
-  {
-    id: "outdoor",
-    name: "Outdoor & Sports Toys",
-    icon: "⚽",
-    toys: [],
-  },
-  {
-    id: "pretend-play",
-    name: "Pretend Play & Dress-Up",
-    icon: "👑",
-    toys: [],
-  },
-  {
-    id: "electronic",
-    name: "Electronic & Tech Toys",
-    icon: "🤖",
-    toys: [],
-  },
-  {
-    id: "musical",
-    name: "Musical Toys",
-    icon: "🎵",
-    toys: [],
-  },
-  {
-    id: "baby",
-    name: "Baby & Toddler Toys",
-    icon: "👶",
-    toys: [],
-  },
-  {
-    id: "collectibles",
-    name: "Collectibles & Miniatures",
-    icon: "💎",
-    toys: [],
-  },
-];
+import { db } from "@/lib/firebase";
+import {
+  collection,
+  getDocs,
+  getDoc,
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
 
-export const getCategories = () => categories;
+// *************** Categories ***************
 
-export const getCategory = (id: string) => categories.find((c) => c.id === id);
+// Fetch all categories
+export const getCategories = async () => {
+  const categoriesCollection = collection(db, "categories");
+  const snapshot = await getDocs(categoriesCollection);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
 
-export const getToy = (categoryId: string, toyId: string) => {
-  const category = getCategory(categoryId);
-  return category?.toys.find((t) => t.id === toyId);
+// Fetch a single category by ID
+export const getCategory = async (categoryId) => {
+  if (!categoryId) return null;
+  const categoryDoc = doc(db, "categories", categoryId);
+  const snapshot = await getDoc(categoryDoc);
+  if (snapshot.exists()) {
+    return { id: snapshot.id, ...snapshot.data() };
+  }
+  return null;
+};
+
+// Add a new category
+export const addCategory = async (category) => {
+  await addDoc(collection(db, "categories"), category);
+  return await getCategories(); // Return updated list
+};
+
+// Update a category
+export const updateCategory = async (categoryId, updatedData) => {
+  const categoryDoc = doc(db, "categories", categoryId);
+  await updateDoc(categoryDoc, updatedData);
+  return await getCategories(); // Return updated list
+};
+
+// Delete a category
+export const deleteCategory = async (categoryId) => {
+  const categoryDoc = doc(db, "categories", categoryId);
+  await deleteDoc(categoryDoc);
+  return await getCategories(); // Return updated list
+};
+
+// *************** Toys (Sub-categories) ***************
+
+// Fetch a single toy by category ID and toy ID
+export const getToy = async (categoryId, toyId) => {
+  if (!categoryId || !toyId) return null;
+  const category = await getCategory(categoryId);
+  if (category && category.toys) {
+    return category.toys.find(toy => toy.id === toyId);
+  }
+  return null;
+};
+
+
+// Update a sub-category (toy)
+export const updateSubCategory = async (
+  categoryId,
+  subCategoryId,
+  updatedData
+) => {
+  const categories = await getCategories();
+  const category = categories.find(cat => cat.id === categoryId);
+  if (!category) return categories;
+
+  const toyToUpdate = category.toys.find(toy => toy.id === subCategoryId);
+  if(!toyToUpdate) return categories;
+
+  const categoryDoc = doc(db, "categories", categoryId);
+  await updateDoc(categoryDoc, {
+    toys: arrayRemove(toyToUpdate),
+  });
+
+  await updateDoc(categoryDoc, {
+    toys: arrayUnion({ ...toyToUpdate, ...updatedData }),
+  });
+
+  return await getCategories(); 
+};
+
+// Delete a sub-category (toy)
+export const deleteSubCategory = async (categoryId, subCategoryId) => {
+  const categories = await getCategories();
+  const category = categories.find(cat => cat.id === categoryId);
+    if (!category) return categories;
+
+  const toyToRemove = category.toys.find(toy => toy.id === subCategoryId);
+    if(!toyToRemove) return categories;
+
+  const categoryDoc = doc(db, "categories", categoryId);
+  await updateDoc(categoryDoc, {
+    toys: arrayRemove(toyToRemove),
+  });
+
+  return await getCategories();
 };

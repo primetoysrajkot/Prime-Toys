@@ -44,7 +44,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-card/80 backdrop-blur-sm border border-border/50 shadow-soft"
+            className="inline-flex items-center gap-2 px-4 py-2 mb-8 mt-20 rounded-full bg-card/80 backdrop-blur-sm border border-border/50 shadow-soft"
           >
             <Sparkles className="w-4 h-4 text-accent" />
             <span className="text-sm font-medium text-muted-foreground">Rajkot's Premier Toy Destination</span>
